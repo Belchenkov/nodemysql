@@ -45,6 +45,44 @@ app.get('/createpoststable', (req, res) => {
     });
 });
 
+// Insert post 
+app.get('/addpost', (req, res) => {
+    let post = {
+        title: 'Post Two',
+        body: 'This is post number Two'
+    };
+    let sql = 'INSERT INTO posts SET ?';
+    let query = db.query(sql, post, (err, result) => {
+        if (err) throw err;
+
+        console.log(result);
+        res.send('Record was Added ... ');
+    });
+});
+
+// SELECT posts 
+app.get('/getposts', (req, res) => {
+    let sql = 'SELECT * FROM posts';
+    let query = db.query(sql, (err, result) => {
+        if (err) throw err;
+
+        console.log(result);
+        res.send('Posts fetched ... ');
+    });
+});
+
+
+// SELECT Single Post 
+app.get('/getpost/:id', (req, res) => {
+    let sql = `SELECT * FROM posts WHERE id = ${req.params.id}`;
+    let query = db.query(sql, (err, result) => {
+        if (err) throw err;
+
+        console.log(result);
+        res.send('Post fetched ... ');
+    });
+});
+
 
 const port = '3007';
 app.listen(port, () => {
